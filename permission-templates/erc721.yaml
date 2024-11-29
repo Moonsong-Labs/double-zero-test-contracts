@@ -1,0 +1,101 @@
+contracts:
+  - address: <addr>
+    methods:
+      # ERC164
+      - signature: "function number(byte4) (bool)"
+        read:
+          type: public
+        write:
+          type: public
+      # ERC721
+      - signature: balanceOf(address) (uint256)
+        read:
+          type: checkArgument
+          argIndex: 0
+        write:
+          type: forbidden
+      - signature: "ownerOf(uint256) (address)"
+        read:
+          type: public
+        write:
+          type: forbidden
+        postRead:
+          type: "responseIsCurrentUser"
+      - signature: "safeTransferFrom(address, address, uint256)"
+        read:
+          type: oneOf
+          rules:
+            - type: checkArgument
+              argIndex: 0
+            - type: checkArgument
+              argIndex: 1
+        write:
+          type: oneOf
+          rules:
+            - type: checkArgument
+              argIndex: 0
+            - type: checkArgument
+              argIndex: 1
+      - signature: approve(address, uint256)
+        read:
+          type: public
+        write:
+          type: public
+      - signature: getApproved()
+        read:
+          type: public
+        write:
+          type: public
+      - signature: setApprovalForAll
+        read:
+          type: public
+        write:
+          type: public
+      - signature: isApprovedForAll(address, address)
+        read:
+          type: public
+        write:
+          type: public
+      - signature: safeTransferFrom(address, address, uint256)
+        # This work because we check that msg.sender is the current user and the method reverts
+        # if msg.sender has no permission over the token to move.
+        read:
+          type: public 
+        write:
+          type: public
+      # ERC721Metadata
+      - signature: name() 
+        read:
+          type: public
+        write:
+          type: public
+      - signature: symbol() 
+        read:
+          type: public
+        write:
+          type: public
+      - signature: tokenUri(uint256) 
+        read:
+          type: public
+        write:
+          type: public
+      # ERC721MetadataEnumerable
+      - signature: totalSupply()
+        read:
+          type: public
+        write:
+          type: public
+      - signature: tokenOfOwnerByIndex(address, uint256)
+        read:
+          type: checkArgument
+          argIndex: 0
+        write:
+          type: checkArgument
+          argIndex: 0
+      - signature: tokenByIndex(index) 
+        read:
+          type: checkArgument
+          argIndex: 0
+        write:
+          type: checkArgument
+          argIndex: 0
