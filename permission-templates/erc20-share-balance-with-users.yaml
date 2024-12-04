@@ -101,11 +101,11 @@ contracts:
           type: public
       - signature: function shareBalanceWith(address reader) public
         read:
-          type: closed
+          type: public
         write:
           type: public
       - signature: function hideBalanceFrom(address reader) public
         read:
-          type: closed
+          type: public
         write:
           type: public
