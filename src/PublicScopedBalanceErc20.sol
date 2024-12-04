@@ -4,7 +4,7 @@ pragma solidity 0.8.24;
 
 import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-contract SomeErc20 is ERC20 {
+contract PublicScopedBalanceErc20 is ERC20 {
     uint8 private _decimals;
     mapping(address => uint256) private puclicThresholds;
 
@@ -13,8 +13,8 @@ contract SomeErc20 is ERC20 {
         _decimals = 4;
     }
 
-    function mint(address _to, uint256 _amount) public returns (bool) {
-        _mint(_to, _amount);
+    function mint(address to, uint256 amount) public returns (bool) {
+        _mint(to, amount);
         return true;
     }
 
@@ -22,12 +22,12 @@ contract SomeErc20 is ERC20 {
         return _decimals;
     }
 
-    function puclicThreshold(address target) public view returns (uint256, bool) {
+    function publicThreshold(address target) public view returns (uint256, bool) {
         uint256 threshold = puclicThresholds[target];
         return (threshold, balanceOf(target) >= threshold);
     }
 
-    function changePublicThreshold(uint256 publicThreshold) external {
-        puclicThresholds[msg.sender] = publicThreshold;
+    function changePublicThreshold(uint256 newThreshold) external {
+        puclicThresholds[msg.sender] = newThreshold;
     }
 }

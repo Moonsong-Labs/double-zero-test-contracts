@@ -2,7 +2,7 @@ contracts:
   - address: <addr>
     methods:
       # ERC164
-      - signature: "function number(byte4) (bool)"
+      - signature: "supportsInterface(bytes4)"
         read:
           type: public
         write:

@@ -5,11 +5,11 @@ pragma solidity 0.8.24;
 import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import {ERC721Enumerable} from "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 
-contract SomeErc721 is ERC721 {
+contract PublicSelectionErc721 is ERC721 {
     uint256 private _lastId;
     mapping(address owner => uint256[]) private publicInventories;
 
-    constructor() ERC721("SomeToken", "ST") {
+    constructor(string memory name, string memory symbol) ERC721(name, symbol) {
         _lastId = 0;
     }
 
