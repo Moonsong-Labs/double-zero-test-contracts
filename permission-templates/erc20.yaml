@@ -1,0 +1,53 @@
+contracts:
+  - address: <addr>
+    methods:
+      # ERC164
+      - signature: totalSupply()
+        read:
+          type: public
+        write:
+          type: public
+      - signature: balanceOf(account)
+        read:
+          type: checkArgument
+          argIndex: 0
+        write:
+          type: closed    
+      - signature: allowance(owner, spender)
+        read:
+          type: oneOf
+          rules:
+            - type: checkArgument
+              argIndex: 0
+            - type: checkArgument
+              argIndex: 1
+        write:
+          type: closed 
+      - signature: approve(spender, amount)
+        # This doesn't leek information because we validate that current user
+        # is msg.sender.
+        read:
+          type: public
+        write:
+          type: public
+      - signature: transferFrom(sender, recipient, amount)
+        # This doesn't leek information because we validate that current user
+        # is msg.sender.
+        read:
+          type: public
+        write:
+          type: public
+      - signature: increaseAllowance(spender, addedValue)
+        # This doesn't leek information because we validate that current user
+        # is msg.sender.
+        read:
+          type: public
+        write:
+          type: public
+      - signature: decreaseAllowance(spender, subtractedValue)
+        # This doesn't leek information because we validate that current user
+        # is msg.sender.
+        read:
+          type: public
+        write:
+          type: public
