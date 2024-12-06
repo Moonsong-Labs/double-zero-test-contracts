@@ -48,14 +48,3 @@ contract ShareScopedBalanceErc20 is ERC20 {
         permissions[msg.sender][reader] = 0;
     }
 }
-
-
-
-// forge create --zksync \
-//     --rpc-url http://localhost:3050 \
-//     --private-key 0x87ce66d9f787696d21af61750c1c3310099f27fb7e7259a193a8c514293a7c0c \
-//     --verify \
-//     --verifier-url http://localhost:3020/api \
-//     --verifier zksync \
-//     src/ShareScopedBalanceErc20.sol:ShareScopedBalanceErc20 \
-//     --constructor-args "ShareScopedBalanceErc20" "SSBE20"
