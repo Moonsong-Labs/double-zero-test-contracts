@@ -13,10 +13,7 @@ contract PublicSelectionErc721 is ERC721 {
         _lastId = 0;
     }
 
-    function mintNext(address target)
-        public
-        returns (uint256)
-    {
+    function mintNext(address target) public returns (uint256) {
         _lastId += 1;
 
         uint256 newItemId = _lastId;
@@ -45,19 +42,27 @@ contract PublicSelectionErc721 is ERC721 {
         publicInventories[msg.sender].push(tokenId);
     }
 
+    function hide(uint256 tokenId) public {
+        return _hideFor(tokenId, msg.sender);
+    }
+
 
     function _update(address to, uint256 tokenId, address auth) internal virtual override returns (address) {
         if (auth != address(0)) {
-            uint256[] storage inventory = publicInventories[auth];
-            for (uint i = 0; i < inventory.length; i++) {
-                if (inventory[i] == tokenId) {
-                    inventory[i] = inventory[inventory.length - 1];
-                    inventory.pop();
-                    break;
-                }
-            }
+            _hideFor(tokenId, auth);
         }
         
         return super._update(to, tokenId, auth);
+    }
+
+    function _hideFor(uint256 tokenId, address user) internal {
+        uint256[] storage exposed = publicInventories[user];
+        for (uint i = 0; i < exposed.length; i++) {
+            if (exposed[i] == tokenId) {
+                exposed[i] = exposed[exposed.length - 1];
+                exposed.pop();
+                break;
+            }
+        }       
     }
 }

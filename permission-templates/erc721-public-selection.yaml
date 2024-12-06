@@ -2,26 +2,27 @@ contracts:
   - address: <addr>
     methods:
       # ERC164
-      - signature: "supportsInterface(bytes4)"
+      - signature: function supportsInterface(bytes4 interfaceId) public view override(ERC165, IERC165) returns (bool)
         read:
           type: public
         write:
-          type: public
-      # ERC721
-      - signature: balanceOf(address) (uint256)
+          type: closed
+      # IERC721
+      - signature: function balanceOf(address owner) public view returns (uint256)
         read:
           type: checkArgument
           argIndex: 0
         write:
-          type: forbidden
-      - signature: "ownerOf(uint256) (address)"
+          type: closed
+      - signature: function ownerOf(uint256 tokenId) public view returns (address)
         read:
           type: public
         write:
-          type: forbidden
+          type: closed
         postRead:
           type: "responseIsCurrentUser"
-      - signature: "safeTransferFrom(address, address, uint256)"
+          index: 0
+      - signature: function safeTransferFrom(address from, address to, uint256 tokenId) public
         read:
           type: oneOf
           rules:
@@ -36,45 +37,45 @@ contracts:
               argIndex: 0
             - type: checkArgument
               argIndex: 1
-      - signature: approve(address, uint256)
+      - signature: function approve(address to, uint256 tokenId) public
         read:
           type: public
         write:
           type: public
-      - signature: getApproved()
+      - signature: function getApproved(uint256 tokenId) public view returns (address)
         read:
           type: public
         write:
           type: public
-      - signature: setApprovalForAll
+      - signature: function setApprovalForAll(address operator, bool approved) public
         read:
           type: public
         write:
           type: public
-      - signature: isApprovedForAll(address, address)
+      - signature: function isApprovedForAll(address owner, address operator) public view returns (bool)
         read:
           type: public
         write:
           type: public
-      - signature: safeTransferFrom(address, address, uint256)
+      - signature: function safeTransferFrom(address from, address to, uint256 tokenId) public
         # This work because we check that msg.sender is the current user and the method reverts
         # if msg.sender has no permission over the token to move.
         read:
-          type: public 
+          type: public
         write:
           type: public
       # ERC721Metadata
-      - signature: name() 
+      - signature: function name() public view returns (string)
         read:
           type: public
         write:
           type: public
-      - signature: symbol() 
+      - signature: function symbol() public view rtual returns (string)
         read:
           type: public
         write:
           type: public
-      - signature: tokenUri(uint256) 
+      - signature: function tokenURI(uint256 tokenId) public view returns (string memory)
         read:
           type: public
         write:
@@ -85,17 +86,45 @@ contracts:
           type: public
         write:
           type: public
-      - signature: tokenOfOwnerByIndex(address, uint256)
+      - signature: function tokenOfOwnerByIndex(address owner, uint256 index) public view returns (uint256)
         read:
           type: checkArgument
           argIndex: 0
         write:
           type: checkArgument
           argIndex: 0
-      - signature: tokenByIndex(index) 
+      - signature: function tokenByIndex(uint256 index) public view returns (uint256)
         read:
           type: checkArgument
           argIndex: 0
         write:
           type: checkArgument
           argIndex: 0
+
+      # Extender methods
+      - signature: function mintNext(address target) public returns (uint256)
+        read:
+          type: group
+          groups:
+            - admins
+        write:
+          type: group
+          groups:
+            - admins
+
+      - signature: function publicInventory(address owner) public view returns (uint256[])
+        read:
+          type: public
+        write:
+          type: public
+
+      - signature: function expose(uint256 tokenId) public
+        read:
+          type: public
+        write:
+          type: public
+      - signature: function hide(uint256 tokenId) public
+        read:
+          type: public
+        write:
+          type: public
