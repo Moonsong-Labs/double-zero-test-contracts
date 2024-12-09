@@ -1,66 +1,23 @@
-## Foundry
+# Double Zero test contracts
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+This repo contains a series of contracts meant to be use to test and showcase the [double zero framework](https://github.com/Moonsong-Labs/double-zero).
 
-Foundry consists of:
+In order to deploy the contracts in this repo you are going to need [foundry zksync](https://foundry-book.zksync.io/getting-started/installation).
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+## Contracts
 
-## Documentation
+The contracts in this repo are variations of well known standards taking adventage of the privacy and access control
+provided by double zero. Each contracts has comments in the source code explaining how they work and why they work.
 
-https://book.getfoundry.sh/
+## Deploy
 
-## Usage
+You can deploy all the contracts by running:
 
-### Build
-
-```shell
-$ forge build
+``` bash
+export RPC_URL=<your_rpc_url> # i.e.: http://localhost:3050
+export VERIFIER_URL=<your_rpc_url> # i.e.: http://localhost:3070/contract_verification
+ export PRIV_KEY=<your_depoyment_priv_key> # space at the beggining to avoid save pk in shell history.
+./bash_scripts/deploy_tokens.sh
 ```
 
-### Test
-
-```shell
-$ forge test
-```
-
-### Format
-
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+Once the contracts are deployed you can use the double zero explorer to check their status and interact with them.

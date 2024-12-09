@@ -3,41 +3,56 @@
 set -e
 set -o xtrace
 
+if [[ -z "${PRIV_KEY}" ]]; then
+  echo "missing PRIV_KEY env var"
+  exit 1
+fi
+
+if [[ -z "${RPC_URL}" ]]; then
+  echo "missing RPC_URL env var"
+  exit 1
+fi
+
+if [[ -z "${VERIFIER_URL}" ]]; then
+  echo "missing VERIFIER_URL env var"
+  exit 1
+fi
+
 forge create --zksync \
-    --rpc-url http://localhost:3050 \
-    --private-key 0x87ce66d9f787696d21af61750c1c3310099f27fb7e7259a193a8c514293a7c0c \
+    --rpc-url $RPC_URL \
+    --private-key $PRIV_KEY \
     --verify \
     --verifier zksync \
-    --verifier-url http://localhost:3070/contract_verification \
+    --verifier-url VERIFIER_URL \
     src/PublicScopedBalanceErc20.sol:PublicScopedBalanceErc20 \
-    --constructor-args "PublicScopedBalanceErc20-posta" "PEB20P";
+    --constructor-args "PublicScopedBalanceErc20" "PEB20";
 
 forge create --zksync \
-    --rpc-url http://localhost:3050 \
-    --private-key 0x87ce66d9f787696d21af61750c1c3310099f27fb7e7259a193a8c514293a7c0c \
+    --rpc-url $RPC_URL \
+    --private-key $PRIV_KEY \
     --verify \
     --verifier zksync \
-    --verifier-url http://localhost:3070/contract_verification \
+    --verifier-url VERIFIER_URL \
     src/ShareBalanceErc20.sol:ShareBalanceErc20 \
-    --constructor-args "ShareBalanceErc20-posta" "SB20P";
+    --constructor-args "ShareBalanceErc20" "SB20";
 
 forge create --zksync \
-    --rpc-url http://localhost:3050 \
-    --private-key 0x87ce66d9f787696d21af61750c1c3310099f27fb7e7259a193a8c514293a7c0c \
+    --rpc-url $RPC_URL \
+    --private-key $PRIV_KEY \
     --verify \
     --verifier zksync \
-    --verifier-url http://localhost:3070/contract_verification \
+    --verifier-url VERIFIER_URL \
     src/ShareScopedBalanceErc20.sol:ShareScopedBalanceErc20 \
-    --constructor-args "ShareScopedBalanceErc20-posta" "SSBE20P";
+    --constructor-args "ShareScopedBalanceErc20" "SSBE20";
 
 
 forge create --zksync \
-    --rpc-url http://localhost:3050 \
-    --private-key 0x87ce66d9f787696d21af61750c1c3310099f27fb7e7259a193a8c514293a7c0c \
+    --rpc-url $RPC_URL \
+    --private-key $PRIV_KEY \
     --verify \
     --verifier zksync \
-    --verifier-url http://localhost:3070/contract_verification \
+    --verifier-url VERIFIER_URL \
     src/PublicSelectionErc721.sol:PublicSelectionErc721 \
-    --constructor-args "PublicSelectionErc721-posta" "PC721P";
+    --constructor-args "PublicSelectionErc721" "PC721";
 
  
