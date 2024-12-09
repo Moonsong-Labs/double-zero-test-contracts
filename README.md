@@ -21,3 +21,9 @@ export VERIFIER_URL=<your_rpc_url> # i.e.: http://localhost:3070/contract_verifi
 ```
 
 Once the contracts are deployed you can use the double zero explorer to check their status and interact with them.
+
+## Double zero permissions
+
+Inside the `/permission-templates` folder there are several double zero permission files templates.
+These are example permission restrictions for each contract to work as they re meant to work. These
+can be modified to achieve different levels of privacy over each contract.
